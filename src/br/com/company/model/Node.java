@@ -40,9 +40,4 @@ public class Node {
     public void update(){
         frequency++;
     }
-
-
-    public Node search(char character, int frequency) {
-
-    }
 }

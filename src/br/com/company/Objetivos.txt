@@ -1,8 +1,19 @@
 Objetivos:
-C    1 - Criar a classe NodeChar, que contém um caractere e sua frequencia, além de conter o número para uma refrencia para a esquerda e a direita.
-    2 - Criar a arvore binária de Nodechar.
-        a - Ela deve permitir adição de elemento;
-        b - Busca de elemento;
-        c - Obtenção de caminho de elemento;
+C    1 - Criar a classe Node, que contém um caractere e sua frequencia, além de conter uma referência para a esquerda e a direita.
+    2 - Criar a arvore binária de Node.
     3 - Criar a heap para armazenar um Nodechar associado.
-    4 -
+    4 - Criar a classe responsável por ler o arquivo com todas as suas pontuações.
+        a - Ela deve ler;
+        b - Tranformar em uma String;
+    5 -  Criar a classe de Importar que deve:
+        a - receber um arquivo;
+        b - ler um arquivo com o auxílio da classe que lê o arquivo;
+        c - criar o seu dicionário de frequencia (Atributo privado);
+        d - criar a arvore para codificar;
+        e - Escrever em um arquivo;
+     6 - Criar classe para escrever em um arquivo binário.
+
+
+
+
+
