@@ -1,4 +1,8 @@
 Objetivos:
 C    1 - Criar a classe NodeChar, que contém um caractere e sua frequencia, além de conter o número para uma refrencia para a esquerda e a direita.
     2 - Criar a arvore binária de Nodechar.
+        a - Ela deve permitir adição de elemento;
+        b - Busca de elemento;
+        c - Obtenção de caminho de elemento;
     3 - Criar a heap para armazenar um Nodechar associado.
+    4 -

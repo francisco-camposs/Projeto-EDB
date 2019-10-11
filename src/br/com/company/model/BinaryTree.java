@@ -2,7 +2,7 @@ package br.com.company.model;
 
 public class BinaryTree {
 
-    NodeChar node;
+    Node root;
 
     public void add(char a) {
 
@@ -12,7 +12,12 @@ public class BinaryTree {
 
     }
 
-    NodeChar search(char Character){
+    public Node search(char Character, int frequency){
+        return root.search(Character,frequency);
+    }
+
+    public String path(char a){
+
         return null;
     }
 }
