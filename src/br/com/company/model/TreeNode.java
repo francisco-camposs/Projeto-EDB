@@ -4,8 +4,8 @@ public class TreeNode extends  Node{
     private TreeNode left;
     private TreeNode right;
 
-    public TreeNode(int character, TreeNode left, TreeNode right) {
-        super(character);
+    public TreeNode(Character character, int frequency, TreeNode left, TreeNode right) {
+        super(character, frequency);
         this.left = left;
         this.right = right;
     }

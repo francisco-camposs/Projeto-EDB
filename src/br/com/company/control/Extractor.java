@@ -1,7 +1,8 @@
 package br.com.company.control;
 
+import br.com.company.model.HeapCode;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -12,7 +13,8 @@ public class Extractor {
     private String fileDict;
     private String file;
     private HashMap<Character, Integer> frequence;
-    private HashMap<String, String> coding;
+    private HeapCode heap;
+    private HashMap<Character, String> coding;
     private File origin;
     private File destiny;
     private File dict;
@@ -27,6 +29,7 @@ public class Extractor {
         this.fileDict = fileDict;
         frequence = new HashMap<>();
         coding = new HashMap<>();
+        heap = new HeapCode();
     }
 
     public void reading() throws IOException {
@@ -42,8 +45,14 @@ public class Extractor {
                 frequence.put(value,1);
             }
         }
+        for (Character value: frequence.keySet()) {
+            heap.add(frequence.get(value), value);
+        }
     };
 
+    public HeapCode getHeap() {
+        return heap;
+    }
 
     public void generateTree(){
 

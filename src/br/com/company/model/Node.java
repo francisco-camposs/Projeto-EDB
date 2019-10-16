@@ -1,17 +1,17 @@
 package br.com.company.model;
 
 public class Node {
-    private int letter;
-    private int frequency;
+    protected char letter;
+    protected int frequency;
 
 
-    public Node(int character) {
+    public Node(char character, Integer frequency) {
         letter = character;
-        frequency = 1;
+        this.frequency = frequency;
 
     }
 
-    public int getLetter() {
+    public char getLetter() {
         return letter;
     }
 
@@ -21,5 +21,9 @@ public class Node {
 
     public void update(){
         frequency++;
+    }
+
+    public boolean biggerOrEqualThen(Node node){
+        return this.frequency >=  node.frequency;
     }
 }
