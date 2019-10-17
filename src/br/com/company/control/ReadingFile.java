@@ -18,10 +18,7 @@ public class ReadingFile {
 
     public String reading() throws IOException {
         while (file.ready()) {
-            content += file.readLine();
-            if (file.ready()){
-                content += "\n";
-            }
+            content += (char)file.read();
         }
         file.close();
         char [] single = {'\3'};

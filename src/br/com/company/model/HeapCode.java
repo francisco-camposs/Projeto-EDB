@@ -4,49 +4,88 @@ import java.util.Arrays;
 
 public class HeapCode {
 
-    private Node[] node;
+    private TreeNode[] node;
     private int size;
     private int maxSize;
 
     public HeapCode() {
-       node = new Node[10];
+       node = new TreeNode[10];
        size = 0;
        maxSize = 10;
     }
 
     public HeapCode(int maxSize) {
-        node = new Node[maxSize];
+        node = new TreeNode[maxSize];
         size = 0;
         this.maxSize = maxSize;
     }
 
-    public void add(Integer frequency, Character character){
-        add(new Node(character, frequency));
+    public void add(Integer frequency, Integer character){
+        add(new TreeNode(character, frequency));
     }
 
-    private void add(Node node) {
+    public void add(TreeNode node) {
         if (isFull()){
             resize();
         }
         this.node[size] = node;
-        heapIfUp(size);
+        heapifyUp(size);
         size += 1;
     }
 
-    private void heapIfUp(int index) {
+    private void heapifyUp(int index) {
         if (!(hasParent(index))){
             return;
         }
         int parentIndex = getParentIndex(index);
 
-        Node here = node[index];
-        Node father = node[parentIndex];
+        TreeNode here = node[index];
+        TreeNode father = node[parentIndex];
 
-        if (here.getFrequency() > father.getFrequency()){
+        if (here.getFrequency() < father.getFrequency()){
             node[index] = father;
             node[parentIndex] = here;
-            heapIfUp(parentIndex);
+            heapifyUp(parentIndex);
         }
+    }
+
+    public void remove(){
+        node[0] = node[getSize()-1];
+        node[getSize() -1] = null;
+        size--;
+        heapifyDown(0);
+    }
+
+    private void heapifyDown(int index){
+        int leftChild = index * 2 + 1;
+        int rightChild = index * 2 + 2;
+
+        int childIndex = -1;
+
+        if (leftChild < getSize()){
+            childIndex = leftChild;
+        }
+
+        if (childIndex < 0){
+            return;
+        }
+
+        if (rightChild < getSize()){
+            if (node[rightChild].getFrequency() > node[leftChild].getFrequency()){
+                childIndex = rightChild;
+            }
+        }
+
+        if (node[index].getFrequency() < node[childIndex].getFrequency()){
+            TreeNode tmp = node[index];
+            node[index] = node[childIndex];
+            node[childIndex] = tmp;
+            heapifyDown(childIndex);
+        }
+    }
+
+    public TreeNode peek(){
+        return node[0];
     }
 
     public boolean hasParent(int index){
@@ -66,7 +105,7 @@ public class HeapCode {
         return getSize() == getMaxSize();
     }
 
-    public Node[] getNode() {
+    public TreeNode[] getTreeNode() {
         return node;
     }
 

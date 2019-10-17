@@ -1,9 +1,11 @@
 package br.com.company.control;
 
 import br.com.company.model.HeapCode;
+import br.com.company.model.TreeNode;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.BitSet;
 import java.util.HashMap;
 
 public class Extractor {
@@ -14,7 +16,7 @@ public class Extractor {
     private String file;
     private HashMap<Character, Integer> frequence;
     private HeapCode heap;
-    private HashMap<Character, String> coding;
+    private HashMap<Character, BitSet> coding;
     private File origin;
     private File destiny;
     private File dict;
@@ -45,8 +47,8 @@ public class Extractor {
                 frequence.put(value,1);
             }
         }
-        for (Character value: frequence.keySet()) {
-            heap.add(frequence.get(value), value);
+        for (char value: frequence.keySet()) {
+            heap.add(frequence.get(value), (int)value);
         }
     };
 
@@ -55,16 +57,37 @@ public class Extractor {
     }
 
     public void generateTree(){
-
+        while (heap.getSize() > 1){
+            TreeNode aux1 = new TreeNode(0,0);
+            aux1.setLeft(heap.peek());
+            aux1.update(heap.peek().getFrequency());
+            heap.remove();
+            aux1.setRight(heap.peek());
+            aux1.update(heap.peek().getFrequency());
+            heap.remove();
+            heap.add(aux1);
+        }
     };
 
     public void generateCode(){
+        BitSet bit = new BitSet();
+        generateCode(heap.peek(),bit);
+    }
 
-    };
+    private void generateCode(TreeNode peek, BitSet bit) {
+        if(peek.getLetter() == 0){
+            BitSet bitLeft = (BitSet) bit.clone();
+            bitLeft.set(bitLeft.size(), false);
+            BitSet bitRight = (BitSet) bit.clone();
+            bitRight.set(bitLeft.size(), true);
+            generateCode(peek.getLeft(),bitLeft);
+            generateCode(peek.getRight(), bitRight);
+        }
+        coding.put((char)peek.getLetter(), bit);
+    }
 
 
     public void writing(){
-
 
     };
 

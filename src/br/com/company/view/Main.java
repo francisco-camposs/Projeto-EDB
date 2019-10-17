@@ -27,7 +27,18 @@ public class Main {
                 System.out.println("\n");
                 k *= 2;
             }
-            System.out.print("("+extrac.getHeap().getNode()[i].getLetter()+") = "+extrac.getHeap().getNode()[i].getFrequency()+" ");
+            System.out.print("("+extrac.getHeap().getTreeNode()[i].getLetter()+") = "+extrac.getHeap().getTreeNode()[i].getFrequency()+" ");
         }
+
+        extrac.generateTree();
+        for (int i = 0; i < extrac.getHeap().getSize(); i++){
+            if (i == k){
+                System.out.println("\n");
+                k *= 2;
+            }
+            System.out.print("("+extrac.getHeap().getTreeNode()[i].getLetter()+") = "+extrac.getHeap().getTreeNode()[i].getFrequency()+" ");
+        }
+
+
     }
 }

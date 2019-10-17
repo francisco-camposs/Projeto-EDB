@@ -1,17 +1,17 @@
 package br.com.company.model;
 
 public class Node {
-    protected char letter;
+    protected int letter;
     protected int frequency;
 
 
-    public Node(char character, Integer frequency) {
+    public Node(int character, Integer frequency) {
         letter = character;
         this.frequency = frequency;
 
     }
 
-    public char getLetter() {
+    public int getLetter() {
         return letter;
     }
 
