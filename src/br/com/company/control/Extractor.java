@@ -16,6 +16,11 @@ public class Extractor {
     private String file;
     private HashMap<Character, Integer> frequence;
     private HeapCode heap;
+
+    public HashMap<Character, BitSet> getCoding() {
+        return coding;
+    }
+
     private HashMap<Character, BitSet> coding;
     private File origin;
     private File destiny;

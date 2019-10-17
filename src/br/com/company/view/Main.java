@@ -5,6 +5,7 @@ import br.com.company.model.BinaryTree;
 import br.com.company.model.Node;
 
 import java.io.IOException;
+import java.util.BitSet;
 
 public class Main {
 
@@ -18,26 +19,17 @@ public class Main {
             return;
         }
         System.out.println(extrac.getFile());
-        System.out.println("Aqui oh porra: ");
         extrac.generateFrequency();
-
-        int k = 1;
-        for (int i = 0; i < extrac.getHeap().getSize(); i++){
-            if (i == k){
-                System.out.println("\n");
-                k *= 2;
-            }
-            System.out.print("("+extrac.getHeap().getTreeNode()[i].getLetter()+") = "+extrac.getHeap().getTreeNode()[i].getFrequency()+" ");
-        }
-
         extrac.generateTree();
-        for (int i = 0; i < extrac.getHeap().getSize(); i++){
-            if (i == k){
-                System.out.println("\n");
-                k *= 2;
-            }
-            System.out.print("("+extrac.getHeap().getTreeNode()[i].getLetter()+") = "+extrac.getHeap().getTreeNode()[i].getFrequency()+" ");
-        }
+        extrac.generateCode();
+
+//        for (var value: extrac.getCoding().keySet()){
+//            System.out.println(value+": "+extrac.getCoding().get(value).toString());
+//        }
+
+        BitSet bit = new BitSet();
+        bit.set(bit.size());
+        System.out.println(bit.toByteArray().length+" "+bit.size());
 
 
     }
