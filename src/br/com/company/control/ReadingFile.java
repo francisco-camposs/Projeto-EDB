@@ -18,10 +18,12 @@ public class ReadingFile {
 
     public String reading() throws IOException {
         while (file.ready()) {
-            content += (char)file.read();
+            content += file.readLine();
+            if (file.ready()){
+                content += "\n";
+            }
         }
         file.close();
-        char [] single = {'\3'};
-        return content + new String(single);
+        return content +"\3";
     }
 }

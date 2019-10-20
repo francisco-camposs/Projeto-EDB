@@ -71,12 +71,12 @@ public class HeapCode {
         }
 
         if (rightChild < getSize()){
-            if (node[rightChild].getFrequency() > node[leftChild].getFrequency()){
+            if (node[rightChild].getFrequency() < node[leftChild].getFrequency()){
                 childIndex = rightChild;
             }
         }
 
-        if (node[index].getFrequency() < node[childIndex].getFrequency()){
+        if (node[index].getFrequency() > node[childIndex].getFrequency()){
             TreeNode tmp = node[index];
             node[index] = node[childIndex];
             node[childIndex] = tmp;

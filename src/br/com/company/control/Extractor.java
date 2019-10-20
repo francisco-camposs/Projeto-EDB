@@ -5,7 +5,6 @@ import br.com.company.model.TreeNode;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.BitSet;
 import java.util.HashMap;
 
 public class Extractor {
@@ -17,11 +16,11 @@ public class Extractor {
     private HashMap<Character, Integer> frequence;
     private HeapCode heap;
 
-    public HashMap<Character, BitSet> getCoding() {
+    public HashMap<Character, String> getCoding() {
         return coding;
     }
 
-    private HashMap<Character, BitSet> coding;
+    private HashMap<Character, String> coding;
     private File origin;
     private File destiny;
     private File dict;
@@ -35,7 +34,7 @@ public class Extractor {
         this.fileTarget = fileTarget;
         this.fileDict = fileDict;
         frequence = new HashMap<>();
-        coding = new HashMap<>();
+        coding = new HashMap<Character, String>();
         heap = new HeapCode();
     }
 
@@ -62,7 +61,7 @@ public class Extractor {
     }
 
     public void generateTree(){
-        while (heap.getSize() > 1){
+        if (heap.getSize() > 1){
             TreeNode aux1 = new TreeNode(0,0);
             aux1.setLeft(heap.peek());
             aux1.update(heap.peek().getFrequency());
@@ -71,24 +70,33 @@ public class Extractor {
             aux1.update(heap.peek().getFrequency());
             heap.remove();
             heap.add(aux1);
+            generateTree();
         }
-    };
+    }
+
+    private void generateTree(TreeNode node) {
+        if (heap.getSize() > 1){
+
+        }
+    }
+
+    ;
 
     public void generateCode(){
-        BitSet bit = new BitSet();
+        String bit = new String();
         generateCode(heap.peek(),bit);
     }
 
-    private void generateCode(TreeNode peek, BitSet bit) {
+    private void generateCode(TreeNode peek, String bit) {
         if(peek.getLetter() == 0){
-            BitSet bitLeft = (BitSet) bit.clone();
-            bitLeft.set(bitLeft.size(), false);
-            BitSet bitRight = (BitSet) bit.clone();
-            bitRight.set(bitLeft.size(), true);
+            String bitLeft = bit+"0";
+            String bitRight = bit+"1";
             generateCode(peek.getLeft(),bitLeft);
             generateCode(peek.getRight(), bitRight);
+        } else {
+            coding.put((char)peek.getLetter(), bit);
         }
-        coding.put((char)peek.getLetter(), bit);
+
     }
 
 
