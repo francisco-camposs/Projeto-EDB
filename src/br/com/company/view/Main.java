@@ -22,9 +22,9 @@ public class Main {
         extrac.generateFrequency();
         extrac.generateTree();
         extrac.generateCode();
-
-        for (var value: extrac.getCoding().keySet()){
-            System.out.println(value+": "+extrac.getCoding().get(value));
-        }
+        extrac.createBitArray();
+        for (byte value: extrac.getBitFile().toByteArray()){
+            System.out.println(value);
+        };
     }
 }
