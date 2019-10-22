@@ -1,18 +1,14 @@
 package br.com.company.view;
 
 import br.com.company.control.Extractor;
-import br.com.company.model.BinaryTree;
-import br.com.company.model.HeapCode;
-import br.com.company.model.Node;
-
 import java.io.IOException;
-import java.util.BitSet;
+
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        Extractor extrac = new Extractor("/home/francisco/Objetivos.txt", "Math.edz", "Math.edx");
+	// write your destinycode here
+        Extractor extrac = new Extractor("/home/francisco/Documentos/Projeto-EDB/testes/teste7.txt", "Math.edz", "Math.edx");
         try {
             extrac.reading();
         } catch (IOException e) {
@@ -23,8 +19,15 @@ public class Main {
         extrac.generateTree();
         extrac.generateCode();
         extrac.createBitArray();
-        for (byte value: extrac.getBitFile().toByteArray()){
-            System.out.println(value);
-        };
+//        System.out.println(extrac.getBitFile());
+        extrac.desencripty();
+        for (var value: extrac.toByteArray()){
+            System.out.println(value+" ");
+        }
+        extrac.writing();
+
+        System.out.println(extrac.stringStrange());
+        System.out.println();
+
     }
 }

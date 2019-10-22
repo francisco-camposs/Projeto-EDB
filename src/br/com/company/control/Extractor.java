@@ -2,9 +2,9 @@ package br.com.company.control;
 
 import br.com.company.model.HeapCode;
 import br.com.company.model.TreeNode;
+import br.com.company.model.UsableBitSet;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.BitSet;
 import java.util.HashMap;
 
@@ -15,10 +15,9 @@ public class Extractor {
     private String fileDict;
     private String file;
     private HeapCode heap;
-    private BitSet bitFile;
+    private UsableBitSet bitFile;
     private HashMap<Character, Integer> frequence;
-    private HashMap<Character, BitSet> coding;
-    private File origin;
+    private HashMap<Character, UsableBitSet> coding;
     private File destiny;
     private File dict;
 
@@ -29,7 +28,9 @@ public class Extractor {
         frequence = new HashMap<>();
         coding = new HashMap<>();
         heap = new HeapCode();
-        bitFile = new BitSet();
+        bitFile = new UsableBitSet();
+        destiny = new File(fileTarget);
+        dict = new File(fileDict);
     }
 
     public void reading() throws IOException {
@@ -65,15 +66,15 @@ public class Extractor {
     }
 
     public void generateCode(){
-        BitSet bit = new BitSet();
+        UsableBitSet bit = new UsableBitSet();
         generateCode(0, heap.peek(), bit);
     }
 
-    private void generateCode(int numero, TreeNode peek, BitSet bit) {
+    private void generateCode(int numero, TreeNode peek, UsableBitSet bit) {
         if(peek.getLetter() == 0){
-            BitSet bitLeft = bit.get(0,bit.length());
+            UsableBitSet bitLeft = new UsableBitSet(bit);
             bitLeft.set(numero, false);
-            BitSet bitRight = bit.get(0,bit.length());
+            UsableBitSet bitRight = new UsableBitSet(bit);
             bitRight.set(numero,true);
             generateCode(numero+1,peek.getLeft(),bitLeft);
             generateCode(numero+1,peek.getRight(), bitRight);
@@ -84,14 +85,76 @@ public class Extractor {
 
     public void createBitArray(){
         for (int i = 0; i < file.length(); i++){
-            for (int k = 0; k < coding.get(file.charAt(i)).length(); k++){
-                bitFile.set(bitFile.length(), coding.get(file.charAt(i)).get(k));
+            for (int k = 0; k < coding.get(file.charAt(i)).getTrueSize() ; k++) {
+                bitFile.set(bitFile.getTrueSize(),coding.get(file.charAt(i)).get(k));
             }
         }
     }
 
+    public void  desencripty (){
+        UsableBitSet bit = new UsableBitSet();
+        HashMap<UsableBitSet, Character> bitmap = new HashMap<>();
+        for (var value: coding.keySet()){
+            bitmap.put(coding.get(value), value);
+        }
+        for (var value: bitmap.keySet() ) {
+            System.out.print(bitmap.get(value)+": ");
+            for (int i = 0; i < value.getTrueSize(); i++){
+                System.out.print(value.get(i) + " ");
+            }
+            System.out.println("");
+        }
+
+        for (int i = 0; i <bitFile.getTrueSize(); i++){
+            bit.set(bit.getTrueSize(), bitFile.get(i));
+            for (var value: bitmap.keySet()) {
+                if (bit.equals(value)){
+                    System.out.print(bitmap.get(value));
+                    bit.clear();
+                }
+            }
+        }
+        System.out.println(" ");
+    }
 
     public void writing(){
+
+        boolean bean;
+        try {
+            bean = destiny.createNewFile();
+            if (!bean){
+                System.out.println("File already present at the specified location.");
+                return;
+            }
+        }catch (IOException e) {
+            System.out.println("Houve um erro inesperado.");
+            e.printStackTrace();
+        }
+
+        try {
+            bean = dict.createNewFile();
+            if (!bean){
+                System.out.println("File already present at the specified location.");
+                return;
+            }
+        }catch (IOException e) {
+            System.out.println("Houve um erro inesperado.");
+            e.printStackTrace();
+        }
+
+        FileOutputStream file = null;
+        try {
+            file = new FileOutputStream(destiny, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println("Meu deussss");
+            file.write(bitFile.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     };
 
@@ -107,11 +170,19 @@ public class Extractor {
         return frequence;
     }
 
-    public HashMap<Character, BitSet> getCoding() {
+    public HashMap<Character, UsableBitSet> getCoding() {
         return coding;
     }
 
     public BitSet getBitFile() {
         return bitFile;
+    }
+
+    public byte[] toByteArray(){
+        return bitFile.toByteArray();
+    }
+
+    public String stringStrange (){
+        return bitFile.toString();
     }
 }

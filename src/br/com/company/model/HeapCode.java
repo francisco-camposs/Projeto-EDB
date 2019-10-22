@@ -76,6 +76,7 @@ public class HeapCode {
             }
         }
 
+
         if (node[index].getFrequency() > node[childIndex].getFrequency()){
             TreeNode tmp = node[index];
             node[index] = node[childIndex];
