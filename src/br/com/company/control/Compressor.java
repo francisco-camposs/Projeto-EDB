@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.BitSet;
 import java.util.HashMap;
 
-public class Extractor {
+public class Compressor {
 
     private String fileLocation;
     private String fileTarget;
@@ -21,7 +21,7 @@ public class Extractor {
     private File destiny;
     private File dict;
 
-    public Extractor(String fileLocation, String fileTarget, String fileDict) {
+    public Compressor(String fileLocation, String fileTarget, String fileDict) {
         this.fileLocation = fileLocation;
         this.fileTarget = fileTarget;
         this.fileDict = fileDict;
@@ -97,28 +97,18 @@ public class Extractor {
         for (var value: coding.keySet()){
             bitmap.put(coding.get(value), value);
         }
-        for (var value: bitmap.keySet() ) {
-            System.out.print(bitmap.get(value)+": ");
-            for (int i = 0; i < value.getTrueSize(); i++){
-                System.out.print(value.get(i) + " ");
-            }
-            System.out.println("");
-        }
 
         for (int i = 0; i <bitFile.getTrueSize(); i++){
             bit.set(bit.getTrueSize(), bitFile.get(i));
             for (var value: bitmap.keySet()) {
                 if (bit.equals(value)){
-                    System.out.print(bitmap.get(value));
                     bit.clear();
                 }
             }
         }
-        System.out.println(" ");
     }
 
     public void writing(){
-
         boolean bean;
         try {
             bean = destiny.createNewFile();
@@ -150,12 +140,30 @@ public class Extractor {
         }
 
         try {
-            System.out.println("Meu deussss");
             file.write(bitFile.toByteArray());
+            file.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        try {
+            file = new FileOutputStream(dict, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            for (var value: coding.keySet()) {
+                file.write(value);
+                for (var varr: coding.get(value).toByteArray()){
+                    file.write((int)varr);
+                }
+                file.write(300);
+            }
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     };
 
     public HeapCode getHeap() {
